@@ -1,0 +1,3 @@
+[submodule "code/nn-static-analysis"]
+	path = code/nn-static-analysis
+	url = https://github.com/cuplv/nn_static_analysis
