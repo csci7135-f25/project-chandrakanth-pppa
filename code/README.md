@@ -1,5 +1,7 @@
 # Neural Network Static Analysis
 
+> **Note:** This directory contains a submodule linking to the main repository within the CUPLV organization. You can clone this repository normally, and the submodule will function as intended. The README content below mirrors the original repository.
+
 
 Code for the project titled `Certifying Differential Invariants in Backpropagation of Neural Networks using Abstract Duals`. This leverages the [`ocaml-nn`](https://github.com/ck090/ocaml-nn/tree/main) library to perform static analysis, implementing and comparing **DeepPoly** domain analysis against **Gradient-based verification** (using Abstract Dual Numbers).
 
