@@ -7,18 +7,48 @@ This repository is organized as follows:
 
 ```
 .
-├── README.md
 ├── code
+│   ├── nn-static-analysis
+│   │   ├── data
+│   │   │   ├── test_small_labels.csv
+│   │   │   ├── test_small.csv
+│   │   │   ├── train_small_labels.csv
+│   │   │   └── train_small.csv
+│   │   ├── dune
+│   │   ├── dune-project
+│   │   ├── image.png
+│   │   ├── LICENSE
+│   │   ├── README.md
+│   │   ├── results_summary.txt
+│   │   ├── src
+│   │   │   ├── abstract_dual.ml
+│   │   │   ├── abstract_dual.mli
+│   │   │   ├── activation.ml
+│   │   │   ├── activation.mli
+│   │   │   ├── deeppoly.ml
+│   │   │   ├── deeppoly.mli
+│   │   │   ├── gd.ml
+│   │   │   ├── gd.mli
+│   │   │   ├── neuralnet.ml
+│   │   │   ├── neuralnet.mli
+│   │   │   ├── prop.ml
+│   │   │   ├── prop.mli
+│   │   │   ├── util.ml
+│   │   │   └── util.mli
+│   │   ├── train.ml
+│   │   ├── verify_gradient.ml
+│   │   └── verify.ml
 │   └── README.md
 ├── paper
 │   ├── Makefile
-│   ├── README.md
 │   ├── paper.bib
 │   ├── paper.pdf
-│   └── paper.tex
+│   ├── paper.tex
+│   └── README.md
+├── README.md
 └── talk
-    ├── README.md
-    └── talk.pptx
+    ├── main.pdf
+    └── README.md
 ```
 
 ## Assignment
