@@ -1,32 +1,33 @@
 %% This is an abbreviated template from http://www.sigplan.org/Resources/Author/.
 
 \documentclass[acmsmall,review,nonacm]{acmart}
-\begin{document}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{mathpartir}
+\usepackage{listings}
+\let\Bbbk\undefined 
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning}
 
-%%
-%% The "title" command has an optional parameter,
-%% allowing the author to define a "short title" to be used in page headers.
+
 \title{Certifying Differential Invariants of Neural Networks using Abstract Duals}
-
-%%
-%% The "author" command and its associated commands are used to define
-%% the authors and their affiliations.
-%% Of note is the shared affiliation of the first two authors, and the
-%% "authornote" and "authornotemark" commands
-%% used to denote shared contribution to the research.
 \author{Chandra Kanth Nagesh}
 \email{ckn@colorado.edu}
 \affiliation{%
   \institution{University of Colorado Boulder}
+  \city{Boulder}
+  \state{Colorado}
   \country{USA}
 }
 
+\begin{document}
 
 %%
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-  Neural networks are increasingly used in safety-critical domains, necessitating formal guarantees about their properties under perturbations to inputs. Existing robust verification techniques, typified by \texttt{DeepPoly}, primarily focus on the Forward Pass Verification Problem—certifying output stability where $f(\mathbf{I}) \subseteq [\mathbf{y}_L, \mathbf{y}_R]$ for an $\mathbf{L}_{\infty}$-constrained input set $\mathbf{I} = \{\mathbf{x} \mid \|\mathbf{x} - \mathbf{x}_0\|_{\infty} \le \epsilon\}$. While methods like \texttt{DeepPoly} employ a sophisticated polyhedral abstract domain (combining intervals and affine forms) to generate sound, tight bounds, this entire class of analysis still fails to provide sound guarantees over the network's derivative behavior. This oversight creates a critical verification gap for gradient-dependent systems—such as scientific machine learning models and feedback control loops—where the core challenge shifts to the Backward Pass Verification Problem: formally bounding the Jacobian $\mathbf{J}(\mathbf{x}) = \nabla_{\mathbf{x}} f(\mathbf{x})$ such that $\mathbf{J}(\mathbf{x}) \subseteq [\mathbf{J}_L, \mathbf{J}_R]$ for all $\mathbf{x} \in \mathbf{I}$. This new capability is essential for certifying crucial differential invariants.
+  Neural networks are increasingly used in safety-critical domains, necessitating formal guarantees about their properties under perturbations to inputs. Existing robust verification techniques, typified by \texttt{DeepPoly}, primarily focus on the robustness analysis during forward mode learning where certifying output stability is typified by $f(\mathbf{I}) \subseteq [\mathbf{y}_L, \mathbf{y}_R]$ for an $\mathbf{L}_{\infty}$-constrained input set $\mathbf{I} = \{\mathbf{x} \|\mathbf{x} - \mathbf{x}_0\|_{\infty} \le \epsilon\}$. While such methods employ a sophisticated polyhedral abstract domain (combining intervals and affine forms) to generate sound, tight bounds, this entire class of analysis still fails to provide sound guarantees over the behaviour of the network. This oversight creates a critical verification gap for gradient-dependent systems where the Backward Pass Verification Problem which can be described formally as bounding the Jacobian $\mathbf{J}(\mathbf{x}) = \nabla_{\mathbf{x}} f(\mathbf{x})$ such that $\mathbf{J}(\mathbf{x}) \subseteq [\mathbf{J}_L, \mathbf{J}_R]$ for all $\mathbf{x} \in \mathbf{I}$ is essential.
 \end{abstract}
 
 %%
@@ -34,7 +35,7 @@
 %% information and builds the first part of the formatted document.
 \maketitle
 
-\section{Introduction}
+\input{sections/introduction.tex}
 
 \section{Overview}
 
