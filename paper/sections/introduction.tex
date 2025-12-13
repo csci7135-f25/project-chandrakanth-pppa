@@ -1,3 +1,24 @@
 \section{Introduction}
 
-\texttt{DeepPoly}\cite{singh_gehr_püschel_vechev_2019} 
+\texttt{DeepPoly}\cite{singh_gehr_püschel_vechev_2019} provides us with a clear method to certify output bounds for a given neural network. Let us consider the situation where we are given a trained neural network $f(\mathbf{I})$ on some set $\mathbf{I}$. Then, under some input $x_0 \in \I$ and perturbation $\epsilon$, we need to verify that the output of $f$ still satisfies the same result i.e. we want to verify that the neural network is invariant to a $\epsilon$ perturbation of the input. This can formally be represented as:
+\begin{align*}
+    \forall x \in \mathbb{B}_\infty(x_0, \epsilon): \quad \text{argmax}(f(x)) = \text{argmax}(f(x_0))
+\end{align*}
+where, $\mathbb{B}_{\infty}$ is a ball of $\epsilon$ radius around the input provided by its $\Ll_{\infty}$ norm. This is critical in a lot of scenarios as with many supervised learning problems, it is infeasible to verify the output of a neural network against all possible test sets. We want to formally prove that the model is invariant to these input changes.~\cite{Weng2018TowardsFC,Gehr2018AI2SA,NEURIPS2018_f2f44698} were some of the earliest works in this domain.
+
+\subsection{Definition of the Abstract Dual Domain}
+We define the Abstract Dual domain $ \hat{\mathcal{D}} $ as a product space of two affine forms representing the range of values and the range of gradients across a set.
+\begin{definition}
+An \textbf{Abstract Dual Number} $ \mathcal{X} \in \hat{\mathcal{D}} $ is a pair:
+$$ \mathcal{X} = \langle \hat{x}_{val}, \hat{x}_{grad} \rangle $$
+where $ \hat{x}_{val} $ is the affine form of the neuron values and $ \hat{x}_{grad} $ is the affine form of the partial derivatives with respect to the input.
+\end{definition}
+
+\subsection{Propagation Rules}
+To propagate $ \mathcal{X} $ through a neural network, we define abstract transformers for each layer type.
+3
+\textbf{Linear Layers:} For a weight matrix $ W $ and bias $ b $, the transformation is exactly determined by the linearity of the dual algebra:
+$$ \mathcal{Y} = \langle W \hat{x}_{val} + b, W \hat{x}_{grad} \rangle $$
+
+\textbf{Non-linear Activations:} For a smooth activation $ \sigma $, we apply a linear relaxation. Let $ [l, u] $ be the interval range of $ \hat{x}_{val} $. We bound the derivative $ \sigma' $ over this interval:
+$$ \hat{y}_{grad} = [\inf_{z \in [l, u]} \sigma'(z), \sup_{z \in [l, u]} \sigma'(z)] \cdot \hat{x}_{grad} $$

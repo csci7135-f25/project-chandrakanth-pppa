@@ -1,0 +1,80 @@
+\section{Contributions}
+\subsection{Theoretical Results: Soundness and Instability}
+
+\section{Formal Proof of Soundness}
+
+In this section, we establish the mathematical validity of the Abstract Dual domain. We demonstrate that the interval of gradients produced by our forward-mode propagation soundly over-approximates the true range of partial derivatives of the neural network $f$ over the input region $X_0$.
+
+\subsection{Foundational Definitions}
+Let $f: \R^n \to \R^k$ be a neural network. Let $X_0 \subseteq \R^n$ be a centrally symmetric input region represented by the affine form $\hat{x}_{val}$. We define the \textbf{Concrete Derivative Set} as follows:
+\begin{equation}
+    \mathcal{D}(f, X_0) = \{ \nabla f(x) \in \R^{k \times n} \mid x \in X_0 \}
+\end{equation}
+
+\begin{definition}[Soundness of Abstract Duals]
+An Abstract Dual Number $\mathcal{X} = \langle \hat{x}_{val}, \hat{x}_{grad} \rangle$ is considered \textbf{sound} with respect to a function $f$ and input region $X_0$ if and only if:
+\begin{enumerate}
+    \item $\forall x \in X_0: f(x) \in \gamma(\hat{x}_{val})$
+    \item $\forall x \in X_0: \nabla f(x) \in \gamma(\hat{x}_{grad})$
+\end{enumerate}
+where $\gamma(\hat{x})$ denotes the concretization function mapping an affine form to its corresponding subset of $\R$.
+\end{definition}
+
+\subsection{Linear Layer Soundness}
+\begin{lemma}[Soundness of Linear Transformers]
+Given a sound abstract dual $\mathcal{X}$ and a linear transformation $y = Wx + b$, the abstract transformer $\mathcal{Y} = W\mathcal{X} + b$ is sound.
+\end{lemma}
+
+\begin{proof}
+By the fundamental rules of multi-variable calculus, if $y$ is a linear function of $x$ defined by $y = Wx + b$, the Jacobian matrix is constant: $\nabla_x y = W$. By the chain rule, for a composite function $y(f(x))$, we have:
+\begin{equation}
+    \nabla y = W \cdot \nabla f(x)
+\end{equation}
+In our abstract domain, we define:
+\begin{equation}
+    \hat{y}_{val} = W\hat{x}_{val} + b, \quad \hat{y}_{grad} = W\hat{x}_{grad}
+\end{equation}
+Since affine arithmetic is a linear abstraction, it is exact for linear transformations (i.e., $\gamma(W\hat{x} + b) = \{Wx + b \mid x \in \gamma(\hat{x})\}$). Given that $\mathcal{X}$ is sound, $\gamma(\hat{x}_{grad})$ contains all possible values of $\nabla f(x)$. Therefore, $\gamma(W\hat{x}_{grad})$ must contain $W \cdot \nabla f(x)$. This concludes that $\mathcal{Y}$ is sound.
+\end{proof}
+
+\subsection{Activation Function Soundness}
+\begin{lemma}[Soundness of Non-linear Activation Transformers]
+Let $\sigma$ be a differentiable activation function (e.g., Sigmoid, Tanh). The abstract dual transformer $\sigma^{\#}(\mathcal{X})$ defined by interval derivative bounding is sound.
+\end{lemma}
+
+\begin{proof}
+Consider the composite function $h(x) = \sigma(f(x))$. By the univariate chain rule applied element-wise:
+\begin{equation}
+    \nabla h(x) = \sigma'(f(x)) \cdot \nabla f(x)
+\end{equation}
+Let $[l, u]$ be the interval range of the values $\hat{x}_{val}$. We compute the derivative range $\Sigma'$ as:
+\begin{equation}
+    \Sigma' = \left[ \inf_{z \in [l, u]} \sigma'(z), \sup_{z \in [l, u]} \sigma'(z) \right]
+\end{equation}
+The abstract gradient is then computed as the product $\hat{h}_{grad} = \Sigma' \cdot \hat{x}_{grad}$. By the Mean Value Theorem, for any $x \in X_0$, the concrete value $f(x)$ must lie within $[l, u]$. Consequently, the concrete derivative $\sigma'(f(x))$ must be contained within the interval $\Sigma'$. 
+Using the soundness property of interval-affine multiplication, the resulting affine form $\hat{h}_{grad}$ is guaranteed to enclose the product of any value in $\Sigma'$ and any vector in $\gamma(\hat{x}_{grad})$. Thus, $\forall x \in X_0: \nabla h(x) \in \gamma(\hat{h}_{grad})$.
+\end{proof}
+
+
+
+\subsection{Main Theorem: Lipschitz Certification}
+\begin{theorem}[Global Lipschitz Soundness]
+The Lipschitz constant $K_{comp}$ derived from the output Abstract Dual $\mathcal{Y}_{out}$ is a sound upper bound for the function $f$ over the region $X_0$.
+\end{theorem}
+
+\begin{proof}
+By induction over the network depth $L$, using Lemmas 1 and 2, the final gradient affine form $\hat{y}_{grad}$ at the output layer is a sound over-approximation of the set $\mathcal{D}(f, X_0)$. 
+The global Lipschitz constant for $f$ with respect to the $L_\infty$ norm is defined as:
+\begin{equation}
+    K = \sup_{x \in X_0} \|\nabla f(x)\|_1
+\end{equation}
+For any affine form $\hat{g} = \alpha_0 + \sum_{i=1}^n \alpha_i \epsilon_i$, the supremum of its absolute value is soundly bounded by:
+\begin{equation}
+    \sup | \gamma(\hat{g}) | \leq |\alpha_0| + \sum_{i=1}^n |\alpha_i|
+\end{equation}
+We define $K_{comp}$ as the sum of these absolute coefficients for the output gradient affine form. It follows that $K_{comp} \geq K$. By the Mean Value Theorem:
+\begin{equation}
+    \forall x \in X_0: \|f(x) - f(x_0)\|_\infty \leq K_{comp} \cdot \|x - x_0\|_\infty
+\end{equation}
+Thus, if the safety condition $f(x_0)_{target} - f(x_0)_{other} > K_{comp} \cdot \epsilon$ is satisfied, the classification is guaranteed to be invariant within the $\epsilon$-ball.
+\end{proof}

@@ -10,14 +10,15 @@
 \usepackage{tikz}
 \usetikzlibrary{automata, positioning}
 
+\newcommand{\I}{\mathbf{I}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\Ll}{\mathbf{L}}
 
 \title{Certifying Differential Invariants of Neural Networks using Abstract Duals}
 \author{Chandra Kanth Nagesh}
 \email{ckn@colorado.edu}
 \affiliation{%
   \institution{University of Colorado Boulder}
-  \city{Boulder}
-  \state{Colorado}
   \country{USA}
 }
 
@@ -27,7 +28,7 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-  Neural networks are increasingly used in safety-critical domains, necessitating formal guarantees about their properties under perturbations to inputs. Existing robust verification techniques, typified by \texttt{DeepPoly}, primarily focus on the robustness analysis during forward mode learning where certifying output stability is typified by $f(\mathbf{I}) \subseteq [\mathbf{y}_L, \mathbf{y}_R]$ for an $\mathbf{L}_{\infty}$-constrained input set $\mathbf{I} = \{\mathbf{x} \|\mathbf{x} - \mathbf{x}_0\|_{\infty} \le \epsilon\}$. While such methods employ a sophisticated polyhedral abstract domain (combining intervals and affine forms) to generate sound, tight bounds, this entire class of analysis still fails to provide sound guarantees over the behaviour of the network. This oversight creates a critical verification gap for gradient-dependent systems where the Backward Pass Verification Problem which can be described formally as bounding the Jacobian $\mathbf{J}(\mathbf{x}) = \nabla_{\mathbf{x}} f(\mathbf{x})$ such that $\mathbf{J}(\mathbf{x}) \subseteq [\mathbf{J}_L, \mathbf{J}_R]$ for all $\mathbf{x} \in \mathbf{I}$ is essential.
+  Neural networks are increasingly used in safety-critical domains necessitating formal guarantees about their properties under perturbations to inputs. Existing robust verification techniques, typified by \texttt{DeepPoly} primarily focus on robustness analysis during forward mode where certifying output stability is given by $f(\I) \subseteq [\mathbf{y}_L, \mathbf{y}_R]$ for an $\mathbf{L}_{\infty}$-constrained input set $\I = \{\mathbf{x} \|\mathbf{x} - \mathbf{x}_0\|_{\infty} \le \epsilon\}$. While such methods employ a sophisticated polyhedral abstract domain (combining intervals and affine forms) to generate sound, tight bounds, this entire class of analysis still fails to provide sound guarantees over the behaviour. This oversight creates a critical verification gap for gradient-dependent systems where the Backward Pass Verification Problem which can be described formally as bounding the Jacobian $\mathbf{J}(\mathbf{x}) = \nabla_{\mathbf{x}} f(\mathbf{x})$ such that $\mathbf{J}(\mathbf{x}) \subseteq [\mathbf{J}_L, \mathbf{J}_R]$ for all $\mathbf{x} \in \I$ is essential.
 \end{abstract}
 
 %%
@@ -37,17 +38,15 @@
 
 \input{sections/introduction.tex}
 
-\section{Overview}
+\input{sections/overview.tex}
 
-\section{[Contribution 1]}
+\input{sections/contributions.tex}
 
-\section{[Contribution 2]}
+\input{sections/evaluation.tex}
 
-\section{Evaluation}
+\input{sections/related.tex}
 
-\section{Related Work}
-
-\section{Conclusion}
+\input{sections/conclusion.tex}
 
 %%
 %% The acknowledgments section is defined using the "acks" environment
