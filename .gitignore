@@ -24,3 +24,9 @@ yarn-error.log*
 .env.local
 talk/talk_tex/
 *.cut
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz

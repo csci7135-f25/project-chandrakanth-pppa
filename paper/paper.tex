@@ -9,13 +9,22 @@
 \usepackage{amsmath}
 \usepackage{tikz}
 \usetikzlibrary{automata, positioning}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 \newcommand{\I}{\mathbf{I}}
 \newcommand{\R}{\mathcal{R}}
 \newcommand{\Ll}{\mathbf{L}}
+\newcommand{\mathcalX}{\mathcal{X}}
+\newcommand{\mathcalY}{\mathcal{Y}}
+\newcommand{\mathcalD}{\mathcal{D}}
+\newcommand{\setof}[1]{\left\{ #1 \right\}}
+\newcommand{\hatx}{\hat{x}} 
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\hatJ}{\hat{J}}
 
 \title{Certifying Differential Invariants of Neural Networks using Abstract Duals}
-\author{Chandra Kanth Nagesh}
+\author{\href{https://ck090.github.io}{Chandra Kanth Nagesh}}
 \email{ckn@colorado.edu}
 \affiliation{%
   \institution{University of Colorado Boulder}
@@ -28,7 +37,7 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-  Neural networks are increasingly used in safety-critical domains necessitating formal guarantees about their properties under perturbations to inputs. Existing robust verification techniques, typified by \texttt{DeepPoly} primarily focus on robustness analysis during forward mode where certifying output stability is given by $f(\I) \subseteq [\mathbf{y}_L, \mathbf{y}_R]$ for an $\mathbf{L}_{\infty}$-constrained input set $\I = \{\mathbf{x} \|\mathbf{x} - \mathbf{x}_0\|_{\infty} \le \epsilon\}$. While such methods employ a sophisticated polyhedral abstract domain (combining intervals and affine forms) to generate sound, tight bounds, this entire class of analysis still fails to provide sound guarantees over the behaviour. This oversight creates a critical verification gap for gradient-dependent systems where the Backward Pass Verification Problem which can be described formally as bounding the Jacobian $\mathbf{J}(\mathbf{x}) = \nabla_{\mathbf{x}} f(\mathbf{x})$ such that $\mathbf{J}(\mathbf{x}) \subseteq [\mathbf{J}_L, \mathbf{J}_R]$ for all $\mathbf{x} \in \I$ is essential.
+  Neural networks are increasingly deployed in safety-critical domains, making the formal verification of their robustness against adversarial perturbations a paramount concern. While relational abstract domains like \texttt{DeepPoly} provide state-of-the-art certification, they suffer from the "wrapping effect," where over-approximation errors accumulate layer-by-layer, potentially failing to verify robust networks. In this work, we propose a complementary verification approach using \textit{Abstract Dual Numbers} to compute global Lipschitz bounds via forward-mode automatic differentiation in the abstract domain. We contribute an algorithmic realization of this method that accounts for curvature error, a verification logic based on gradient bounds, and a "Gradient Instability" metric that serves as a precise predictor of verification failure. Our evaluation identifies a specific regime—shallow networks with smooth activations—where our global gradient method successfully certifies 16.1\% of cases that \texttt{DeepPoly} fails to verify, highlighting the trade-off between local precision and global coherence.
 \end{abstract}
 
 %%
@@ -42,20 +51,14 @@
 
 \input{sections/contributions.tex}
 
+\input{sections/proofs.tex}
+
 \input{sections/evaluation.tex}
 
 \input{sections/related.tex}
 
 \input{sections/conclusion.tex}
 
-%%
-%% The acknowledgments section is defined using the "acks" environment
-%% (and NOT an unnumbered section). This ensures the proper
-%% identification of the section in the article metadata, and the
-%% consistent spelling of the heading.
-\begin{acks}
-TBD
-\end{acks}
 
 %%
 %% The next two lines define the bibliography style to be used, and

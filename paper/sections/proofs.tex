@@ -1,0 +1,130 @@
+\section{Formal Soundness of the Abstract Dual Domain}
+
+Here we establish the soundness of the Abstract Dual domain by demonstrating that the forward-mode propagation of abstract dual numbers yields a guaranteed over-approximation of both the output values and the Jacobian of a neural network for a specific input region. Consequently, the Lipschitz constant extracted from the final abstract gradient serves as a verified robustness certificate.
+
+\subsection{Preliminaries}
+Let $f : \R^n \to \R^k$ be a feedforward neural network and let $X_0 \subseteq \R^n$ be a centrally symmetric input region. We utilize \textbf{Affine Arithmetic} for abstraction. An affine form $\hat{z}$ represents a set of values parameterized by noise symbols $\epsilon_j \in [-1, 1]$:
+\begin{equation}
+    \hat{z} = \alpha_0 + \sum_{j=1}^m \alpha_j \epsilon_j.
+\end{equation}
+The \textbf{concretization} function $\gamma(\cdot)$ maps an affine form to its corresponding set of real values:
+\begin{equation}
+    \gamma(\hat{z}) \triangleq \left\{ \alpha_0 + \sum_{j=1}^m \alpha_j \epsilon_j \;\middle|\; \forall j: \epsilon_j \in [-1, 1] \right\}.
+\end{equation}
+This definition extends element-wise to vectors and matrices.
+
+We define the set of all concrete Jacobians reachable over the input region $X_0$ as:
+\begin{equation}
+    \mathcalD(f, X_0) \triangleq \left\{ J_f(x) \in \R^{k \times n} \mid x \in X_0 \right\}.
+\end{equation}
+\begin{definition}[Sound Abstract Dual]
+An abstract dual number $\mathcalX \triangleq \langle \hat{x}_{val}, \hat{x}_{grad} \rangle$ is \emph{sound} for a function $f$ over $X_0$ if:
+\begin{align}
+    \forall x \in X_0: \quad & f(x) \in \gamma(\hat{x}_{val}), \label{eq:sound-val} \\
+    \forall x \in X_0: \quad & J_f(x) \in \gamma(\hat{x}_{grad}). \label{eq:sound-grad}
+\end{align}
+\end{definition}
+
+\subsection{Soundness of Linear Layers}
+
+\begin{lemma}[Linear Layer Soundness]
+Let $\mathcalX$ be a sound abstract dual for $f$ over $X_0$. Consider a linear layer $L(x) = Wx + b$. The abstract transformer $\mathcalY \triangleq W\mathcalX + b$ is sound for the composition $L \circ f$ over $X_0$.
+\end{lemma}
+
+\begin{proof}
+The Jacobian of the affine transformation $L$ is constant: $J_L(x) \equiv W$. By the multivariate chain rule, the Jacobian of the composition is:
+\begin{equation}
+    J_{L \circ f}(x) = J_L(f(x)) \cdot J_f(x) = W \cdot J_f(x).
+\end{equation}
+
+The abstract transformer computes the output components as:
+\begin{align}
+    \hat{y}_{val}  &= W \hat{x}_{val} + b, \\
+    \hat{y}_{grad} &= W \hat{x}_{grad}.
+\end{align}
+
+\textbf{1. Value Soundness:}
+Since affine arithmetic is exact for linear operations, the concretization satisfies:
+\begin{equation}
+    \gamma(\hat{y}_{val}) = \setof{ Wz + b \mid z \in \gamma(\hat{x}_{val}) }.
+\end{equation}
+Because $\mathcalX$ is sound, $f(x) \in \gamma(\hat{x}_{val})$ for all $x \in X_0$. Therefore, $L(f(x)) \in \gamma(\hat{y}_{val})$.
+
+\textbf{2. Gradient Soundness:}
+By the inductive hypothesis, $J_f(x) \in \gamma(\hat{x}_{grad})$ for all $x \in X_0$.
+Since matrix multiplication is a linear operation, the property of affine arithmetic ensures that:
+\begin{equation}
+    \forall J \in \gamma(\hat{x}_{grad}), \quad W \cdot J \in \gamma(W \hat{x}_{grad}).
+\end{equation}
+Substituting the concrete Jacobian $J_f(x)$ for $J$, we obtain $W \cdot J_f(x) \in \gamma(\hat{y}_{grad})$. Thus, $\mathcalY$ is sound.
+\end{proof}
+
+\subsection{Soundness of Nonlinear Activations}
+
+\begin{lemma}[Activation Function Soundness]
+Let $\sigma : \R \to \R$ be a differentiable activation function applied element-wise. The abstract dual transformer, defined using interval bounds on the derivative $\sigma'$, is sound.
+\end{lemma}
+
+\begin{proof}
+Let $h(x) \triangleq \sigma(f(x))$. By the chain rule applied element-wise, the Jacobian is:
+\begin{equation}
+    J_h(x) = \text{diag}(\sigma'(f(x))) \cdot J_f(x).
+\end{equation}
+
+Let the range of the value abstraction be $[l, u] = \text{Range}(\gamma(\hat{x}_{val}))$.
+We compute the interval enclosure of the derivative over this range:
+\begin{equation}
+    \Sigma' \triangleq \left[ \min_{z \in [l,u]} \sigma'(z),\; \max_{z \in [l,u]} \sigma'(z) \right].
+\end{equation}
+
+\textbf{1. Value Soundness:}
+Standard abstract interpretation techniques for $\sigma$ construct $\hat{h}_{val}$ such that $\sigma(\gamma(\hat{x}_{val})) \subseteq \gamma(\hat{h}_{val})$.
+
+\textbf{2. Gradient Soundness:}
+Since $\hat{x}_{val}$ is sound, $f(x) \in [l, u]$ for all $x \in X_0$. Consequently, the concrete derivative $\sigma'(f(x))$ is contained within the interval $\Sigma'$.
+The abstract gradient is updated via interval-affine multiplication:
+\begin{equation}
+    \hat{h}_{grad} \triangleq \Sigma' \otimes \hat{x}_{grad}.
+\end{equation}
+This operation is conservative: it accounts for every possible scaling factor in $\Sigma'$ applied to every affine form in $\hat{x}_{grad}$. Therefore:
+\begin{equation}
+    \text{diag}(\sigma'(f(x))) \cdot J_f(x) \in \gamma(\Sigma' \otimes \hat{x}_{grad}).
+\end{equation}
+This confirms that $J_h(x) \in \gamma(\hat{h}_{grad})$, completing the proof.
+\end{proof}
+
+\subsection{Global Lipschitz Soundness}
+
+\begin{theorem}[Sound Lipschitz Certification]
+Let $\hat{y}_{grad}$ be the abstract Jacobian at the network output. The computed constant $K_{comp}$ derived from $\hat{y}_{grad}$ is a sound upper bound on the $L_\infty$-Lipschitz constant of $f$ over $X_0$.
+\end{theorem}
+
+\begin{proof}
+By induction on the network depth, the final abstract gradient satisfies:
+\begin{equation}
+    \forall x \in X_0: \quad J_f(x) \in \gamma(\hat{y}_{grad}).
+\end{equation}
+
+The local Lipschitz constant of $f$ at $x$ with respect to the $L_\infty$ norm is the induced $\infty$-norm of the Jacobian:
+\begin{equation}
+    \norm{ J_f(x) }_\infty = \max_{i} \sum_{j} | (J_f(x))_{ij} |.
+\end{equation}
+The global Lipschitz constant is $K = \sup_{x \in X_0} \norm{ J_f(x) }_\infty$.
+
+Let the $(i,j)$-th entry of the abstract Jacobian matrix $\hat{y}_{grad}$ be the affine form $\hat{g}_{ij} = c_0 + \sum_k c_k \epsilon_k$.
+The maximum absolute value of this entry is bounded by its $L_1$ coefficient norm:
+\begin{equation}
+    \sup \left| \gamma(\hat{g}_{ij}) \right| \leq |c_0| + \sum_k |c_k| \triangleq \mu_{ij}.
+\end{equation}
+We define the computed constant as the maximum row sum of these upper bounds:
+\begin{equation}
+    K_{comp} \triangleq \max_{i} \sum_{j} \mu_{ij}.
+\end{equation}
+By the triangle inequality, for any concrete $J \in \gamma(\hat{y}_{grad})$, $\norm{J}_\infty \leq K_{comp}$. Since $J_f(x) \in \gamma(\hat{y}_{grad})$, it follows that $K \leq K_{comp}$.
+
+Finally, by the Mean Value Theorem, for any $x, x' \in X_0$:
+\begin{equation}
+    \norm{ f(x) - f(x') }_\infty \leq K_{comp} \cdot \norm{ x - x' }_\infty.
+\end{equation}
+Thus, $K_{comp}$ is a valid Lipschitz certificate.
+\end{proof}
