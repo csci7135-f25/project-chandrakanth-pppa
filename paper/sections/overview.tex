@@ -1,1 +1,55 @@
 \section{Overview}
+
+In this section, we introduce the key insight behind our approach and define the Abstract Dual Domain. Our approach is based on the following intuition: while relational abstractions such as \texttt{DeepPoly}\cite{singh_gehr_püschel_vechev_2019} can be extremely precise, they often suffer from the ``wrapping effect'' where approximation errors accumulate layer by layer. In contrast, global gradient bounds can be sometimes a simpler yet effective verification domain, especially for shallow smooth networks.
+
+\subsection{Paradigm Shift: From Relational Bounds to Gradient Analysis}
+The basic underlying concept of this work is to effectively bridge the gap between standard Abstract Interpretation and Forward-Mode Automatic Differentiation. Standard methods like \texttt{DeepPoly} track affine constraints ($x_j \geq \sum w_i x_i$) to bound the output values directly. However, precise reapproximating the feasible set at every non-linear layer introduces error which tends to accumulate with depth ($O(L)$). Our approach, instead, exploits the Mean Value Theorem to find bounds on the output variation in terms of the gradient variation:
+\begin{align}
+    |f(x) - f(x_0)| \leq \underbrace{\sup_{z \in X} ||\nabla f(z)||}_{\text{Abstract Duals}} \cdot ||x - x_0|
+\end{align}
+By over-approximating the sound of the gradient $\nabla f(z)$ for the entire input space $X$, we can guarantee robustness because the maximum possible change to the output will be too small to change the classification label. The key insight is that this ``jumps'' over the intermediate layers and thus avoids some of the wrapping errors from the layer-wise value propagation.
+
+\subsection{Abstract Dual Domain}
+To formalize this idea, we can start by lifting standard dual numbers to the domain of Affine Arithmetic. Consider the Dual domain $ \hat{\mathcal{D}} $ as a product space of two affine forms representing the range of values and the range of gradients across a set. Then we can say:
+
+\begin{definition}
+An \textbf{Abstract Dual Number} $ \mathcal{X} \in \hat{\mathcal{D}} $ is a pair:
+\begin{align}
+    \mathcal{X} = \langle \hat{x}_{val}, \hat{x}_{grad} \rangle
+\end{align}
+where:
+\begin{itemize}
+    \item $ \hat{x}_{val} = \alpha_0 + \sum_{i=1}^n \alpha_i \epsilon_i $ is the affine form representing the interval of neuron values.
+    \item $ \hat{x}_{grad} = d_0 + \sum_{i=1}^n d_i \epsilon_i $ is the affine form representing the interval of partial derivatives with respect to the input.
+\end{itemize}
+\end{definition}
+
+\subsection{Propagation Rules}
+To propagate $\mathcal{X}$ through a neural network, we define abstract transformers for each layer type.
+
+\textbf{Linear Layers:} For a fully connected layer with weight matrix $ W $ and bias vector $ b $, the transformation is exactly determined by the linearity of the dual algebra. The affine forms for value and gradient are transformed as follows:
+\begin{align}
+    \mathcal{Y} = \langle W \hat{x}_{val} + b, W \hat{x}_{grad} \rangle
+\end{align}
+This operation is exact in the affine domain and introduces no new approximation errors.
+
+\textbf{Non-linear Activations:} For a smooth non-linear activation function $ \sigma $ (e.g., Sigmoid), we cannot directly apply the function to the affine forms. We handle the value and gradient components separately:
+
+\textit{Value Component:} We approximate $ \sigma(\hat{x}_{val}) $ using a linear relaxation. We linearize the function around the center of the input affine form $ c $. The new center is $ \sigma(c) $, and the noise coefficients are scaled by the derivative $ \sigma'(c) $. To ensure soundness, we add a linearization error term to the radius $ r $, which depends on the maximum curvature (second derivative) of $ \sigma $ and the radius of the input interval.
+\begin{align}
+    \hat{y}_{val} \approx \sigma(c) + \sigma'(c) \cdot (\hat{x}_{val} - c) + \epsilon_{err}
+\end{align}
+
+\textit{Gradient Component:} By the chain rule, the gradient of the output is the product of the local derivative and the input gradient: $ \nabla y = \sigma'(x) \cdot \nabla x $. In our abstract domain, we compute an affine approximation of the derivative $ \hat{\sigma}' $ based on the output value $ \hat{y}_{val} $. For the Sigmoid function, we use the property $ \sigma'(x) = \sigma(x)(1 - \sigma(x)) $ to approximate the derivative as $ \hat{y}_{val} \otimes (1 - \hat{y}_{val}) $, where $ \otimes $ denotes affine multiplication. The output gradient is then obtained by multiplying this derivative approximation with the input gradient affine form:
+\begin{align}
+    \hat{y}_{grad} = \hat{\sigma}' \cdot \hat{x}_{grad}
+\end{align}
+This approach preserves the correlations between the derivative and the gradient, providing a more precise abstraction than simple interval scaling.
+
+\subsection{Gradient Instability}
+A key insight from our analysis is the concept of \textit{gradient instability}. We define a neuron $n$ as having an unstable gradient if its gradient interval $[\underline{g}, \overline{g}]$ contains 0:
+\begin{align}
+    \exists x_1, x_2 \in X_0 \text{ s.t. } \text{sign}\left(\frac{\partial f}{\partial n}(x_1)\right) \neq \text{sign}\left(\frac{\partial f}{\partial n}(x_2)\right)
+\end{align}
+
+Geometrically, this means that the function is non-monotonic w.r.t. neuron $n$ over the input region. When this happens, the assumption of local linearity breaks down and linear relaxations- such as those in \texttt{DeepPoly}- become loose. Our approach explicitly tracks these gradient intervals, thus enabling us to identify whenever and wherever the network's behaviour becomes hard to certify linearly.

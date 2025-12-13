@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{4}
+\begin{thebibliography}{8}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -36,6 +36,15 @@
 \providecommand\natexlab[1]{#1}
 \providecommand\showeprint[2][]{arXiv:#2}
 
+\bibitem[Cousot and Cousot(1977)]%
+        {cousot_radhia_cousot_1977}
+\bibfield{author}{\bibinfo{person}{Patrick Cousot} {and} \bibinfo{person}{Radhia Cousot}.} \bibinfo{year}{1977}\natexlab{}.
+\newblock \showarticletitle{Abstract interpretation}.
+\newblock \bibinfo{journal}{\emph{Symposium on Principles of Programming Languages}} (\bibinfo{date}{Jan} \bibinfo{year}{1977}).
+\newblock
+\href{https://doi.org/10.1145/512950.512973}{doi:\nolinkurl{10.1145/512950.512973}}
+
+
 \bibitem[Gehr et~al\mbox{.}(2018)]%
         {Gehr2018AI2SA}
 \bibfield{author}{\bibinfo{person}{Timon Gehr}, \bibinfo{person}{Matthew Mirman}, \bibinfo{person}{Dana Drachsler-Cohen}, \bibinfo{person}{Petar Tsankov}, \bibinfo{person}{Swarat Chaudhuri}, {and} \bibinfo{person}{Martin~T. Vechev}.} \bibinfo{year}{2018}\natexlab{}.
@@ -46,6 +55,21 @@
 \url{https://api.semanticscholar.org/CorpusID:206579396}
 \showURL{%
 \tempurl}
+
+
+\bibitem[Griewank and Walther(2008)]%
+        {griewank2008evaluating}
+\bibfield{author}{\bibinfo{person}{Andreas Griewank} {and} \bibinfo{person}{Andrea Walther}.} \bibinfo{year}{2008}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Evaluating derivatives: principles and techniques of algorithmic differentiation}}.
+\newblock \bibinfo{publisher}{SIAM}.
+\newblock
+
+
+\bibitem[Katz et~al\mbox{.}(2017)]%
+        {katz2017reluplex}
+\bibfield{author}{\bibinfo{person}{Guy Katz}, \bibinfo{person}{Clark Barrett}, \bibinfo{person}{David~L Dill}, \bibinfo{person}{Kyle Julian}, {and} \bibinfo{person}{Mykel~J Kochenderfer}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Reluplex: An efficient SMT solver for verifying deep neural networks}. In \bibinfo{booktitle}{\emph{International Conference on Computer Aided Verification}}. Springer, \bibinfo{pages}{97--117}.
+\newblock
 
 
 \bibitem[Singh et~al\mbox{.}(2018)]%
@@ -65,6 +89,13 @@
 \newblock \showarticletitle{An abstract domain for certifying neural networks}, Vol.~\bibinfo{volume}{3}. \bibinfo{pages}{1--30}.
 \newblock
 \href{https://doi.org/10.1145/3290354}{doi:\nolinkurl{10.1145/3290354}}
+
+
+\bibitem[Tjeng et~al\mbox{.}(2019)]%
+        {tjeng2019evaluating}
+\bibfield{author}{\bibinfo{person}{Vincent Tjeng}, \bibinfo{person}{Kai Xiao}, {and} \bibinfo{person}{Russ Tedrake}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Evaluating Robustness of Neural Networks with Mixed Integer Programming}. In \bibinfo{booktitle}{\emph{International Conference on Learning Representations}}.
+\newblock
 
 
 \bibitem[Weng et~al\mbox{.}(2018)]%
