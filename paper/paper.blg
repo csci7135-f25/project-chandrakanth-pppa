@@ -1,0 +1,72 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: paper.aux
+The style file: ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: paper.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Warning--no number and no volume in cousot_radhia_cousot_1977
+Warning--page numbers missing in both pages and numpages fields in cousot_radhia_cousot_1977
+Warning--no number and no volume in Gehr2018AI2SA
+Warning--empty address in griewank2008evaluating
+Warning--empty publisher in katz2017reluplex
+Warning--empty address in katz2017reluplex
+Warning--empty address in NEURIPS2018_f2f44698
+Warning--page numbers missing in both pages and numpages fields in NEURIPS2018_f2f44698
+Warning--empty booktitle in singh_gehr_püschel_vechev_2019
+Warning--can't use both volume and number fields in singh_gehr_püschel_vechev_2019
+Warning--empty publisher in singh_gehr_püschel_vechev_2019
+Warning--empty address in singh_gehr_püschel_vechev_2019
+Warning--empty publisher in tjeng2019evaluating
+Warning--empty address in tjeng2019evaluating
+Warning--page numbers missing in both pages and numpages fields in tjeng2019evaluating
+Warning--page numbers missing in both pages and numpages fields in Weng2018TowardsFC
+You've used 8 entries,
+            6056 wiz_defined-function locations,
+            1534 strings with 19876 characters,
+and the built_in function-call counts, 9520 in all, are:
+= -- 1121
+> -- 372
+< -- 0
++ -- 129
+- -- 167
+* -- 728
+:= -- 979
+add.period$ -- 40
+call.type$ -- 8
+change.case$ -- 67
+chr.to.int$ -- 8
+cite$ -- 24
+duplicate$ -- 779
+empty$ -- 554
+format.name$ -- 159
+if$ -- 2228
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 34
+newline$ -- 113
+num.names$ -- 58
+pop$ -- 364
+preamble$ -- 1
+purify$ -- 131
+quote$ -- 0
+skip$ -- 263
+stack$ -- 0
+substring$ -- 618
+swap$ -- 52
+text.length$ -- 76
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 183
+warning$ -- 16
+while$ -- 45
+width$ -- 0
+write$ -- 200
+(There were 16 warnings)

@@ -1,1 +1,1 @@
-# project/talk
+Main presentation slides for the project talk are located in `main.pdf`.

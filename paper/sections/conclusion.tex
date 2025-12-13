@@ -1,0 +1,7 @@
+\section{Conclusion}
+
+In this work, we explored the power of using Abstract Dual Numbers to certify the local robustness of neural networks. By lifting automatic differentiation into the abstract domain, we derived a method to compute global Lipschitz bounds that can certify invariance without explicit layer-by-layer geometric propagation.
+
+Our comparative analysis with \texttt{DeepPoly} revealed a nuanced landscape. While \texttt{DeepPoly} remains the superior choice for general-purpose verification due to its ability to handle deep dependencies, our Gradient Method identified a specific ``blind spot'' in the relational approach. In shallow, smooth networks (Tiny Net with Sigmoid), our method successfully certified 16.1\% of cases at $\epsilon=0.01$ that \texttt{DeepPoly} failed to verify. This suggests that for low-depth architectures, the global gradient bound can be tighter than the accumulated over-approximation error of layer-wise abstract interpretation.
+
+Finally, we established a strong correlation between \textit{Gradient Instability} and robustness failure. In high-perturbation regimes, the presence of zero in the gradient interval served as a perfect predictor for the inability to certify robustness, highlighting its value as a diagnostic metric for detecting the breakdown of local linearity.

@@ -1,1 +1,1 @@
-# project/paper
+This directory contains the tex source for the project paper. The file is `paper.pdf`. The paper is organized into sections in the `sections/` sub-directory. The main tex file is `paper.tex`, which includes the sections and the bibliography file `paper.bib`. The recompile run `make` in this directory to build the paper.

@@ -1,0 +1,80 @@
+\section{Evaluation}
+
+This section presents an evaluation of our method and contrasts its behavior with the \texttt{DeepPoly} abstraction. Concretely, we focus on the following research questions:
+\begin{itemize}
+    \renewcommand{\labelitemi}{\tiny$\square$}
+    \item \textbf{RQ1 (Effectiveness):} In which settings does global gradient analysis yield tighter robustness certificates than layer-wise relational abstractions?
+    \item \textbf{RQ2 (Diagnostic Value):} Is the proposed notion of \emph{gradient instability} predictive of verification failure?
+    \item \textbf{RQ3 (Scalability and Smoothness):} How does performance vary with network size and choice of activation function (Sigmoid versus ReLU)?
+\end{itemize}
+
+\subsection{Experimental Setup}
+
+All experiments were implemented in \textbf{OCaml} (version 4.12+), building on the \texttt{ocaml-nn} library for neural network primitives. Evaluations were performed on a standard MacBook Pro equipped with an Apple M1 Pro processor.
+
+\paragraph{Benchmarks.}
+We consider fully connected classifiers trained on the MNIST dataset. To isolate the effect of network capacity, we evaluate three architectures of increasing width:
+\begin{itemize}
+    \renewcommand{\labelitemi}{\tiny$\square$}
+    \item \textbf{Tiny Net:} 784 inputs $\rightarrow$ 2 hidden units $\rightarrow$ 10 outputs.
+    \item \textbf{Small Net:} 784 inputs $\rightarrow$ 5 hidden units $\rightarrow$ 10 outputs.
+    \item \textbf{Standard Net:} 784 inputs $\rightarrow$ 10 hidden units $\rightarrow$ 10 outputs.
+\end{itemize}
+All models were trained using RMSProp. Robustness was evaluated under $L_\infty$ perturbations with radii $\epsilon \in \{0.01, 0.02, 0.03, 0.12\}$.
+
+\subsection{Results and Analysis}
+
+\subsubsection{RQ1: When Gradient Bounds Succeed and DeepPoly Fails}
+
+A central empirical observation is the existence of a narrow regime in which the global gradient bound certifies robustness while \texttt{DeepPoly} does not. These cases arise almost exclusively for the \textbf{Tiny Net} architecture with Sigmoid activations at small perturbation radii.
+
+\begin{table}[h]
+\centering
+\caption{Cases in which the Gradient Method certifies robustness while \texttt{DeepPoly} fails.}
+\label{tab:tiny_net_results}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Network} & \textbf{$\epsilon$} & \textbf{Count} & \textbf{\% of Total} \\
+\midrule
+Tiny Net & 0.01 & 5 & 16.1\% \\
+Tiny Net & 0.02 & 3 & 9.7\% \\
+Tiny Net & 0.03 & 2 & 6.5\% \\
+Small Net & All & 0 & 0.0\% \\
+Standard Net & All & 0 & 0.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+As shown in Table~\ref{tab:tiny_net_results}, at $\epsilon = 0.01$ the gradient-based method recovers over 16\% of the test instances that \texttt{DeepPoly} fails to verify. These instances correspond to the following MNIST indices:
+\begin{itemize}
+    \renewcommand{\labelitemi}{\tiny$\square$}
+    \item $\epsilon = 0.01$: indices 19, 76, 122, 139, 148 (all with true label 8);
+    \item $\epsilon = 0.02$: indices 122, 139, 148;
+    \item $\epsilon = 0.03$: indices 139, 148.
+\end{itemize}
+
+\paragraph{Case Study: Index 139 (Label 8).}
+To better understand this discrepancy, we examine the instance at index 139 with $\epsilon = 0.03$.
+\begin{itemize}
+    \renewcommand{\labelitemi}{\tiny$\square$}
+    \item \textbf{\texttt{DeepPoly}:} \texttt{UNSTABLE}. The forward-propagated margin collapses to an interval with effectively zero width, indicating overlap with a competing class.
+    \item \textbf{Gradient Method:} \texttt{ROBUST}.
+    \item \textbf{Gradient Stability:} \texttt{NO (480)}, indicating that 480 input dimensions exhibit sign changes in the abstract gradient.
+\end{itemize}
+
+Despite substantial gradient instability, the \emph{magnitude} of the gradient remains small. Consequently, the certified variation $\epsilon \cdot \|\nabla f\|_1$ stays below the true margin between the predicted class and its nearest competitor. In contrast, \texttt{DeepPoly}'s layer-wise abstraction appears to accumulate sufficient over-approximation error—consistent with the classical wrapping effect—to lose the certificate.
+
+\paragraph{Conclusion (RQ1).}
+Global gradient bounds can outperform \texttt{DeepPoly} in shallow, low-capacity networks, where accumulated abstraction error dominates and local gradient magnitudes remain small. This advantage disappears as depth or width increases: for both the Small and Standard networks, \texttt{DeepPoly} strictly dominates, with no recovered cases.
+
+\subsubsection{RQ2: Gradient Instability as a Predictor of Failure}
+
+We next evaluate whether \emph{gradient instability}—defined as the abstract gradient interval containing zero—serves as a reliable indicator of verification difficulty. At the largest perturbation radius $\epsilon = 0.12$, we observe a \textbf{perfect correlation}: every robustness failure coincides with gradient instability, across all architectures.
+
+From a geometric perspective, instability reflects non-monotonicity of the decision function within the input ball. In such regions, first-order linear approximations become inherently loose, explaining the simultaneous failure of both \texttt{DeepPoly} and the Abstract Dual domain. These results support the use of the instability index $\mathcal{I}_{\text{unstable}}$ as a practical diagnostic tool for identifying inherently hard instances.
+
+\subsubsection{RQ3: Effect of Activation Smoothness}
+
+Finally, we repeat the experiments using ReLU activations. In this setting, \texttt{DeepPoly} produces tighter or equal bounds in \textbf{all} cases. The degradation of the Abstract Dual domain can be traced directly to the discontinuous derivative of ReLU. Any unstable ReLU unit forces the abstract derivative to range over $[0,1]$, dramatically inflating the global Lipschitz constant. By contrast, Sigmoid activations admit smooth, bounded derivatives, enabling significantly tighter gradient abstractions.
+
+Overall, the evaluation shows that \texttt{DeepPoly} remains the most robust general-purpose abstraction. However, the Abstract Dual domain offers a complementary perspective: it is particularly effective for \emph{shallow networks with smooth activations}, where it can bypass the cumulative over-approximation inherent to layer-wise methods. Moreover, gradient instability emerges as a meaningful geometric signal, shedding light on when and why verification is likely to fail.

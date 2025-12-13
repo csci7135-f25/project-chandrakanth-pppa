@@ -1,0 +1,113 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{8}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Cousot and Cousot(1977)]%
+        {cousot_radhia_cousot_1977}
+\bibfield{author}{\bibinfo{person}{Patrick Cousot} {and} \bibinfo{person}{Radhia Cousot}.} \bibinfo{year}{1977}\natexlab{}.
+\newblock \showarticletitle{Abstract interpretation}.
+\newblock \bibinfo{journal}{\emph{Symposium on Principles of Programming Languages}} (\bibinfo{date}{Jan} \bibinfo{year}{1977}).
+\newblock
+\href{https://doi.org/10.1145/512950.512973}{doi:\nolinkurl{10.1145/512950.512973}}
+
+
+\bibitem[Gehr et~al\mbox{.}(2018)]%
+        {Gehr2018AI2SA}
+\bibfield{author}{\bibinfo{person}{Timon Gehr}, \bibinfo{person}{Matthew Mirman}, \bibinfo{person}{Dana Drachsler-Cohen}, \bibinfo{person}{Petar Tsankov}, \bibinfo{person}{Swarat Chaudhuri}, {and} \bibinfo{person}{Martin~T. Vechev}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{AI2: Safety and Robustness Certification of Neural Networks with Abstract Interpretation}.
+\newblock \bibinfo{journal}{\emph{2018 IEEE Symposium on Security and Privacy (SP)}} (\bibinfo{year}{2018}), \bibinfo{pages}{3--18}.
+\newblock
+\urldef\tempurl%
+\url{https://api.semanticscholar.org/CorpusID:206579396}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Griewank and Walther(2008)]%
+        {griewank2008evaluating}
+\bibfield{author}{\bibinfo{person}{Andreas Griewank} {and} \bibinfo{person}{Andrea Walther}.} \bibinfo{year}{2008}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Evaluating derivatives: principles and techniques of algorithmic differentiation}}.
+\newblock \bibinfo{publisher}{SIAM}.
+\newblock
+
+
+\bibitem[Katz et~al\mbox{.}(2017)]%
+        {katz2017reluplex}
+\bibfield{author}{\bibinfo{person}{Guy Katz}, \bibinfo{person}{Clark Barrett}, \bibinfo{person}{David~L Dill}, \bibinfo{person}{Kyle Julian}, {and} \bibinfo{person}{Mykel~J Kochenderfer}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Reluplex: An efficient SMT solver for verifying deep neural networks}. In \bibinfo{booktitle}{\emph{International Conference on Computer Aided Verification}}. Springer, \bibinfo{pages}{97--117}.
+\newblock
+
+
+\bibitem[Singh et~al\mbox{.}(2018)]%
+        {NEURIPS2018_f2f44698}
+\bibfield{author}{\bibinfo{person}{Gagandeep Singh}, \bibinfo{person}{Timon Gehr}, \bibinfo{person}{Matthew Mirman}, \bibinfo{person}{Markus P\"{u}schel}, {and} \bibinfo{person}{Martin Vechev}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Fast and Effective Robustness Certification}. In \bibinfo{booktitle}{\emph{Advances in Neural Information Processing Systems}}, \bibfield{editor}{\bibinfo{person}{S.~Bengio}, \bibinfo{person}{H.~Wallach}, \bibinfo{person}{H.~Larochelle}, \bibinfo{person}{K.~Grauman}, \bibinfo{person}{N.~Cesa-Bianchi}, {and} \bibinfo{person}{R.~Garnett}} (Eds.), Vol.~\bibinfo{volume}{31}. \bibinfo{publisher}{Curran Associates, Inc.}
+\newblock
+\urldef\tempurl%
+\url{https://proceedings.neurips.cc/paper_files/paper/2018/file/f2f446980d8e971ef3da97af089481c3-Paper.pdf}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Singh et~al\mbox{.}(2019)]%
+        {singh_gehr_püschel_vechev_2019}
+\bibfield{author}{\bibinfo{person}{Gagandeep Singh}, \bibinfo{person}{Timon Gehr}, \bibinfo{person}{Markus P\"{u}schel}, {and} \bibinfo{person}{Martin Vechev}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{An abstract domain for certifying neural networks}, Vol.~\bibinfo{volume}{3}. \bibinfo{pages}{1--30}.
+\newblock
+\href{https://doi.org/10.1145/3290354}{doi:\nolinkurl{10.1145/3290354}}
+
+
+\bibitem[Tjeng et~al\mbox{.}(2019)]%
+        {tjeng2019evaluating}
+\bibfield{author}{\bibinfo{person}{Vincent Tjeng}, \bibinfo{person}{Kai Xiao}, {and} \bibinfo{person}{Russ Tedrake}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Evaluating Robustness of Neural Networks with Mixed Integer Programming}. In \bibinfo{booktitle}{\emph{International Conference on Learning Representations}}.
+\newblock
+
+
+\bibitem[Weng et~al\mbox{.}(2018)]%
+        {Weng2018TowardsFC}
+\bibfield{author}{\bibinfo{person}{Tsui-Wei Weng}, \bibinfo{person}{Huan Zhang}, \bibinfo{person}{Hongge Chen}, \bibinfo{person}{Zhao Song}, \bibinfo{person}{Cho-Jui Hsieh}, \bibinfo{person}{Duane~S. Boning}, \bibinfo{person}{Inderjit~S. Dhillon}, {and} \bibinfo{person}{Luca Daniel}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Towards Fast Computation of Certified Robustness for ReLU Networks}.
+\newblock \bibinfo{journal}{\emph{ArXiv}}  \bibinfo{volume}{abs/1804.09699} (\bibinfo{year}{2018}).
+\newblock
+\urldef\tempurl%
+\url{https://api.semanticscholar.org/CorpusID:13750928}
+\showURL{%
+\tempurl}
+
+
+\end{thebibliography}
