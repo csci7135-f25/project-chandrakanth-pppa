@@ -44,12 +44,11 @@ In our research, we ask the following question:
     \textit{Can we continue to prove robustness properties of a neural network by leveraging the properties of dual numbers and information about the gradients?}
 \end{quote}
 
-We proceed with the foundation built on the \textit{Abstract Dual Domain}. Our research is based on the theory of forward-mode automatic differentiation, which uses a concept called \textit{dual numbers}\cite{griewank2008evaluating}. We aim to analyze the sensitivity of the neural network to changes in the input, which can potentially provide a tighter bound on certain verification problems.
-
-In summary, our contributions are:
+We proceed with the foundation built on the \textit{Abstract Dual Domain}. Our research is based on the theory of forward-mode automatic differentiation, which uses a concept called \textit{dual numbers}\cite{griewank2008evaluating}. We aim to analyze the sensitivity of the neural network to changes in the input, which can potentially provide a tighter bound on certain verification problems. In summary, our contributions are:
 \begin{itemize}
-    \item \textbf{Algorithmic Realization of Abstract Duals:} We implement a sound abstract domain for dual numbers that explicitly handles curvature error for non-linear activations using Taylor expansion bounds.
-    \item \textbf{Gradient-Based Verification Logic:} We formulate a sufficient condition for local robustness based on global Lipschitz bounds derived from the abstract gradient.
-    \item \textbf{Gradient Instability Metric:} We introduce a diagnostic metric, $\mathcal{I}_{unstable}$, which detects zero-crossings in gradient intervals and serves as a predictor for the breakdown of local linearity.
-    \item \textbf{Empirical Analysis:} We evaluate our method against \texttt{DeepPoly}, identifying a specific "shallow and smooth" regime where global gradient bounds outperform layer-wise relational abstractions.
+    \renewcommand{\labelitemi}{\tiny$\square$}
+    \item \textit{Algorithmic Realization of Abstract Duals:} We implement a sound abstract domain for dual numbers that explicitly handles curvature error for non-linear activations using Taylor expansion bounds.
+    \item \textit{Gradient-Based Verification Logic:} We formulate a sufficient condition for local robustness based on global Lipschitz bounds derived from the abstract gradient.
+    \item \textit{Gradient Instability Metric:} We introduce a diagnostic metric, $\mathcal{I}_{unstable}$, which detects zero-crossings in gradient intervals and serves as a predictor for the breakdown of local linearity.
+    \item \textit{Empirical Analysis:} We evaluate our method against \texttt{DeepPoly}, identifying a specific "shallow and smooth" regime where global gradient bounds outperform layer-wise relational abstractions.
 \end{itemize}

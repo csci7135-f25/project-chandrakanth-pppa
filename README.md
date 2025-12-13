@@ -1,7 +1,7 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/KIMhwtUS)
 # Certifying Differential Invariants of Neural Networks using Abstract Duals
 
-This repository contains the course project for CSCI 7135 - Principles and Practice of Programming Analysis. This project focuses on proving robustness of neural networks using differential invariants and abstract duals. The implementation is based on the `ocaml-nn` framework.
+This repository contains the course project for CSCI 7135 - Principles and Practice of Programming Analysis. The project focuses on proving robustness of neural networks using differential invariants and abstract duals. The implementation is based on the `ocaml-nn` framework.
 
 ## Organization
 

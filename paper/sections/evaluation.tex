@@ -2,6 +2,7 @@
 
 This section presents an evaluation of our method and contrasts its behavior with the \texttt{DeepPoly} abstraction. Concretely, we focus on the following research questions:
 \begin{itemize}
+    \renewcommand{\labelitemi}{\tiny$\square$}
     \item \textbf{RQ1 (Effectiveness):} In which settings does global gradient analysis yield tighter robustness certificates than layer-wise relational abstractions?
     \item \textbf{RQ2 (Diagnostic Value):} Is the proposed notion of \emph{gradient instability} predictive of verification failure?
     \item \textbf{RQ3 (Scalability and Smoothness):} How does performance vary with network size and choice of activation function (Sigmoid versus ReLU)?
@@ -14,6 +15,7 @@ All experiments were implemented in \textbf{OCaml} (version 4.12+), building on 
 \paragraph{Benchmarks.}
 We consider fully connected classifiers trained on the MNIST dataset. To isolate the effect of network capacity, we evaluate three architectures of increasing width:
 \begin{itemize}
+    \renewcommand{\labelitemi}{\tiny$\square$}
     \item \textbf{Tiny Net:} 784 inputs $\rightarrow$ 2 hidden units $\rightarrow$ 10 outputs.
     \item \textbf{Small Net:} 784 inputs $\rightarrow$ 5 hidden units $\rightarrow$ 10 outputs.
     \item \textbf{Standard Net:} 784 inputs $\rightarrow$ 10 hidden units $\rightarrow$ 10 outputs.
@@ -45,6 +47,7 @@ Standard Net & All & 0 & 0.0\% \\
 
 As shown in Table~\ref{tab:tiny_net_results}, at $\epsilon = 0.01$ the gradient-based method recovers over 16\% of the test instances that \texttt{DeepPoly} fails to verify. These instances correspond to the following MNIST indices:
 \begin{itemize}
+    \renewcommand{\labelitemi}{\tiny$\square$}
     \item $\epsilon = 0.01$: indices 19, 76, 122, 139, 148 (all with true label 8);
     \item $\epsilon = 0.02$: indices 122, 139, 148;
     \item $\epsilon = 0.03$: indices 139, 148.
@@ -53,6 +56,7 @@ As shown in Table~\ref{tab:tiny_net_results}, at $\epsilon = 0.01$ the gradient-
 \paragraph{Case Study: Index 139 (Label 8).}
 To better understand this discrepancy, we examine the instance at index 139 with $\epsilon = 0.03$.
 \begin{itemize}
+    \renewcommand{\labelitemi}{\tiny$\square$}
     \item \textbf{\texttt{DeepPoly}:} \texttt{UNSTABLE}. The forward-propagated margin collapses to an interval with effectively zero width, indicating overlap with a competing class.
     \item \textbf{Gradient Method:} \texttt{ROBUST}.
     \item \textbf{Gradient Stability:} \texttt{NO (480)}, indicating that 480 input dimensions exhibit sign changes in the abstract gradient.
