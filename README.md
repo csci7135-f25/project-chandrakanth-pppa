@@ -36,8 +36,12 @@ Organize your project into the following directories:
 
 ### Paper organization
 
+The LaTeX source for the project paper is located in the `paper/` directory. The main tex file is `paper.tex`, which includes sections from the `sections/` sub-directory and the bibliography file `paper.bib`. To compile the paper, run `make` in the `paper/` directory.
 
+### Talk organization
 
-## Handout
+The presentation slides for the project talk are located in the `talk/` directory. The main file is `main.pdf`.
 
-See the assignment [handout](https://pppa-course.github.io/pppa-course/assignments.html#final-projects) for further details and advice.
+### Code organization
+
+The implementation for the project is located in the `code/` directory. It includes a sub-module `nn-static-analysis` which contains the core static analysis framework for neural networks. The `README.md` file in the `code/` directory provides further details on how to build and run the code.
